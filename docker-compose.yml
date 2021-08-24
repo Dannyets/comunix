@@ -29,6 +29,20 @@ services:
     - '8087:8087'
     depends_on: 
     - redis
+  
+  # duplicated socket with different port, needed to do this because eveything runs
+  # in localhost and you can't run 2 servers on the same port
+  socket-2:
+    image: comunix/socket
+    container_name: comunix-socket-2
+    build: ./comunix-socket
+    environment: 
+    - REDIS_HOST=redis:6379
+    - PORT=8989
+    ports:
+    - '8989:8989'
+    depends_on: 
+    - redis
 
   socket-client:
     image: comunix/socket-client
@@ -37,6 +51,16 @@ services:
     - SOCKET_HOST=comunix-socket:8087
     depends_on: 
     - socket
+
+  # duplicated client with different port, needed to do this because eveything runs
+  # in localhost and you cant run 2 servers on the same port
+  socket-2-client:
+    image: comunix/socket-client
+    build: ./comunix-socket-client
+    environment: 
+    - SOCKET_HOST=comunix-socket-2:8989
+    depends_on: 
+    - socket-2
 
   redis:
     image: redis
