@@ -1,0 +1,45 @@
+{
+  "name": "@comunix/api",
+  "version": "0.0.0",
+  "description": "> TODO: description",
+  "author": "dannyets <dannyets@gmail.com>",
+  "license": "ISC",
+  "main": "lib/app.js",
+  "typings": "lib/app.d.ts",
+  "directories": {
+    "lib": "lib",
+    "test": "__tests__"
+  },
+  "files": [
+    "lib"
+  ],
+  "scripts": {
+    "test": "PORT=3022 DB_NAME=comunix DB_HOST=localhost DB_USER=user DB_PASSWORD=password REDIS_HOST=localhost:6379 JWT_PRIVATE_KEY=hireme ts-mocha tests/*/*.test.ts",
+    "build": "yarn run clean && yarn run compile",
+    "compile": "tsc --build",
+    "clean": "rm -f -r lib && rm -f tsconfig.tsbuildinfo",
+    "start": "node lib/app.js",
+    "start:dev": "PORT=3022 DB_NAME=comunix DB_HOST=localhost DB_USER=user DB_PASSWORD=password REDIS_HOST=localhost:6379 JWT_PRIVATE_KEY=hireme ts-node src/app.ts"
+  },
+  "dependencies": {
+    "@types/mysql": "^2.15.19",
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
+    "mysql": "^2.18.1",
+    "redis": "^3.1.2",
+    "uuid": "^8.3.2"
+  },
+  "devDependencies": {
+    "@types/expect": "^24.3.0",
+    "@types/mocha": "^8.2.2",
+    "@types/node": "^15.12.2",
+    "@types/redis": "^2.8.31",
+    "chai": "^4.3.4",
+    "mocha": "^9.0.0",
+    "supertest": "^6.1.5",
+    "ts-mocha": "^8.0.0",
+    "ts-node": "^10.0.0",
+    "typescript": "^4.3.4"
+  }
+}

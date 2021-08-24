@@ -1,0 +1,42 @@
+{
+  "name": "@comunix/socket",
+  "version": "0.0.0",
+  "description": "> TODO: description",
+  "author": "dannyets <dannyets@gmail.com>",
+  "license": "ISC",
+  "main": "lib/app.js",
+  "typings": "lib/app.d.ts",
+  "directories": {
+    "lib": "lib",
+    "test": "__tests__"
+  },
+  "files": [
+    "lib"
+  ],
+  "scripts": {
+    "test": "PORT=8087 REDIS_HOST=localhost:6379 ts-mocha tests/*/*.test.ts",
+    "build": "yarn run clean && yarn run compile",
+    "compile": "tsc --build",
+    "clean": "rm -f -r lib && rm -f tsconfig.tsbuildinfo",
+    "start": "node lib/app.js",
+    "start:dev": "REDIS_HOST=localhost:6379 PORT=8087 ts-node src/app.ts"
+  },
+  "dependencies": {
+    "redis": "^3.1.2",
+    "uuid": "^8.3.2",
+    "ws": "^8.2.0"
+  },
+  "devDependencies": {
+    "@types/expect": "^24.3.0",
+    "@types/mocha": "^8.2.2",
+    "@types/node": "^15.12.2",
+    "@types/redis": "^2.8.31",
+    "@types/ws": "^7.4.7",
+    "chai": "^4.3.4",
+    "mocha": "^9.0.0",
+    "supertest": "^6.1.5",
+    "ts-mocha": "^8.0.0",
+    "ts-node": "^10.0.0",
+    "typescript": "^4.3.4"
+  }
+}

@@ -1,0 +1,66 @@
+version: "3.8"
+services:
+  api:
+    image: comunix/api
+    container_name: comunix-api
+    build: ./comunix-api
+    ports:
+    - 3022:3022
+    environment: 
+    - DB_NAME=comunix 
+    - DB_HOST=mysql
+    - DB_USER=user 
+    - DB_PASSWORD=password
+    - PORT=3022
+    - REDIS_HOST=redis:6379
+    - JWT_PRIVATE_KEY=hireme
+    depends_on: 
+    - redis
+    - db
+
+  socket:
+    image: comunix/socket
+    container_name: comunix-socket
+    build: ./comunix-socket
+    environment: 
+    - REDIS_HOST=redis:6379
+    - PORT=8087
+    ports:
+    - '8087:8087'
+    depends_on: 
+    - redis
+
+  socket-client:
+    image: comunix/socket-client
+    build: ./comunix-socket-client
+    environment: 
+    - SOCKET_HOST=comunix-socket:8087
+    depends_on: 
+    - socket
+
+  redis:
+    image: redis
+    container_name: redis
+    ports:
+    - '6379:6379'
+    expose:
+    - 6379
+  
+  db:
+    image: mysql:5.7
+    container_name: mysql
+    restart: always
+    environment:
+      MYSQL_DATABASE: 'comunix'
+      MYSQL_USER: 'user'
+      MYSQL_PASSWORD: 'password'
+      MYSQL_ROOT_PASSWORD: 'password'
+    ports:
+    - '3306:3306'
+    expose:
+    - '3306'
+    volumes:
+    - my-db:/var/lib/mysql
+
+volumes:
+  my-db:

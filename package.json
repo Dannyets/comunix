@@ -1,0 +1,16 @@
+{
+  "name": "comunix-monorepo",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "Danny Etsebban",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "postinstall": "yarn install:api && yarn install:socket && yarn install:socket-client",
+    "install:api": "cd comunix-api && yarn install && cd ..",
+    "install:socket": "cd comunix-socket && yarn install && cd ..",
+    "install:socket-client": "cd comunix-socket-client && yarn install && cd ..",
+    "start": "docker-compose up --scale socket-client=5 --scale socket=3",
+    "build": "docker-compose up --build --scale socket-client=5"
+  }
+}
