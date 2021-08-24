@@ -26,7 +26,7 @@ export const wild = async (req, res, next) => {
   try {
     await socketService.send(
       { message, type: MessageType.Single },
-      numberOfRandomUsers
+      numberOfRandomUsers ?? 1
     );
     return res.status(200).json({
       message: `Spinned message to ${numberOfRandomUsers} random users`,
